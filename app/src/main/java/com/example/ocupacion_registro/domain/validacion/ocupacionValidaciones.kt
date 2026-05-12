@@ -1,6 +1,6 @@
 package com.example.ocupacion_registro.domain.validacion
 
-class ocupacionValidaciones {
+
 
 
     data class ValidationResult(
@@ -24,4 +24,3 @@ class ocupacionValidaciones {
             else -> ValidationResult(true)
         }
     }
-}
