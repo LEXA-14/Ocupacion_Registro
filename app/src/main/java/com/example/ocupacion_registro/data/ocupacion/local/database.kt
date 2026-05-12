@@ -8,5 +8,5 @@ import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
 )
 
 abstract class ocupacionDatabase:RoomDatabase(){
-    abstract fun OcupacionDao(): ocupacionDao
+    abstract fun ocupacionDao(): ocupacionDao
 }

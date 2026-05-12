@@ -8,30 +8,34 @@ import androidx.test.espresso.core.internal.deps.dagger.Provides
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
 import com.example.ocupacion_registro.data.ocupacion.local.repository.ocupacionRepositoryImp
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import ocupacionDatabase
 import javax.inject.Singleton
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object AppModule{
 
     @Provides
     @Singleton
     fun provideOcupacionDatabase(
         @ApplicationContext context: Context
     ): ocupacionDatabase {
-        return Room.databaseBuilder(
-            context,
-            ocupacionDatabase::class.java,
-            "ocupacion_database"
+        return Room.databaseBuilder<ocupacionDatabase>(
+            name = "ocupacion_database",
+//            context,
+         factory={ ocupacionDatabase::class.java.newInstance()},
+//            name = "ocupacion_database"
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideTaskDao(database: ocupacionDatabase): ocupacionDao {
-        return database.OcupacionDao()
+    fun provideOcupacionDao(database: ocupacionDatabase): ocupacionDao {
+        return database.ocupacionDao()
     }
 }
 

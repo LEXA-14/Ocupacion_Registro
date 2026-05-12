@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 class ObserveOcupacionUseCase(
     private val repository: OcupacionRepository
 ) {
-    operator fun invoke(): Flow<List<Ocupacion>>=repository.ObserveOcupacion()
+    operator fun invoke(): Flow<List<Ocupacion>> = repository.observeAll()
 }

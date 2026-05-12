@@ -6,12 +6,13 @@ import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ocupacionEntity
+import javax.inject.Inject
 
 class ocupacionRepositoryImp @Inject constructor(
     private  val localDataSource: ocupacionDao
 ) : OcupacionRepository{
 
-    override suspend fun ObserveOcupacion(): Flow<List<Ocupacion>> {
+    override fun observeAll(): Flow<List<Ocupacion>> {
         return localDataSource.observeAll().map {
             entities -> entities.map{it.toDomain()}
         }
