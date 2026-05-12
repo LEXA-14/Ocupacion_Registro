@@ -5,8 +5,9 @@ import Ocupacion
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
 import com.example.ocupacion_registro.domain.validacion.validateDescripcion
 import com.example.ocupacion_registro.domain.validacion.validateSueldo
+import javax.inject.Inject
 
-class UpsertOcupacionUseCase(
+class UpsertOcupacionUseCase @Inject constructor(
     private val repository: OcupacionRepository
 ) {
     suspend operator fun invoke(ocupacion: Ocupacion): Result<Int> {

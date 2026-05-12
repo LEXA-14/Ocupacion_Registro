@@ -39,6 +39,12 @@ android {
     buildFeatures {
         compose = true
     }
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains:annotations:23.0.0")
+            exclude(group = "com.intellij" , module = "annotations")
+        }
+    }
 }
 
 dependencies {

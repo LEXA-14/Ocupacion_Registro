@@ -2,8 +2,9 @@ package com.example.ocupacion_registro.di
 
 import android.content.Context
 import androidx.room.Room
+import dagger.Module
 import androidx.test.espresso.core.internal.deps.dagger.Binds
-import androidx.test.espresso.core.internal.deps.dagger.Module
+//import androidx.test.espresso.core.internal.deps.dagger.Module
 import androidx.test.espresso.core.internal.deps.dagger.Provides
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
 import com.example.ocupacion_registro.data.ocupacion.local.repository.ocupacionRepositoryImp
@@ -39,13 +40,3 @@ object AppModule{
     }
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindTaskRepository(
-        impl: ocupacionRepositoryImp
-    ): OcupacionRepository
-}
