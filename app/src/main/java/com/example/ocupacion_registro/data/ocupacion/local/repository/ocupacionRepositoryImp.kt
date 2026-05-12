@@ -19,7 +19,7 @@ class ocupacionRepositoryImp @Inject constructor(
     }
 
     override suspend fun getOcupacion(id: Int): Ocupacion? {
-        localDataSource.getById(id)?.toDomain()
+         return localDataSource.getById(id)?.toDomain()
     }
 
     override suspend fun upsert(ocupacion: Ocupacion): Int {
@@ -32,18 +32,23 @@ class ocupacionRepositoryImp @Inject constructor(
     }
 
     override suspend fun exists(id: Int): Boolean {
-        localDataSource.exists(id)
+         return localDataSource.exists(id)
+    }
+
+    override suspend fun existsByDescripcion(descripcion: String, excludeId: Int): Boolean {
+        return localDataSource.existsByDescripcion(descripcion,excludeId)
     }
 }
 
-fun ocupacion.toDomain():Ocupacion=Ocupacion(
+//mappers
+fun ocupacionEntity.toDomain():Ocupacion=Ocupacion(
     ocupacionId = ocupacionId,
     descripcion = descripcion,
     sueldo = sueldo
 )
 
-//Mappers
-fun ocupacion.toEntity():ocupacionEntity=ocupacionEntity(
+
+fun Ocupacion.toEntity():ocupacionEntity=ocupacionEntity(
     ocupacionId=ocupacionId,
     descripcion=descripcion,
     sueldo=sueldo
