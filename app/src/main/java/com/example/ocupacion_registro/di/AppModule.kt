@@ -18,7 +18,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideTaskDatabase(
+    fun provideOcupacionDatabase(
         @ApplicationContext context: Context
     ): ocupacionDatabase {
         return Room.databaseBuilder(
