@@ -3,12 +3,8 @@ package com.example.ocupacion_registro.di
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
-import androidx.test.espresso.core.internal.deps.dagger.Binds
-//import androidx.test.espresso.core.internal.deps.dagger.Module
-import androidx.test.espresso.core.internal.deps.dagger.Provides
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
-import com.example.ocupacion_registro.data.ocupacion.local.repository.ocupacionRepositoryImp
-import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -25,11 +21,10 @@ object AppModule{
     fun provideOcupacionDatabase(
         @ApplicationContext context: Context
     ): ocupacionDatabase {
-        return Room.databaseBuilder<ocupacionDatabase>(
-            name = "ocupacion_database",
-//            context,
-         factory={ ocupacionDatabase::class.java.newInstance()},
-//            name = "ocupacion_database"
+        return Room.databaseBuilder(
+            context,
+            ocupacionDatabase::class.java,
+             "ocupacion_database"
         ).build()
     }
 
