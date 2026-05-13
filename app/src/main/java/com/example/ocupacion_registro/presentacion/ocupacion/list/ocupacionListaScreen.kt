@@ -1,6 +1,7 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
-import Ocupacion
+import androidx.compose.material.icons.Icons
+import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
@@ -35,19 +36,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-//import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
+
 
 @Composable
 fun OcupacionListScreen(
     viewModel:ocupacionListaViewModel = hiltViewModel(),
-    onAddOcupacion: () -> Unit
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    onAddOcupacion: () -> Unit,
+    onNavigateToEdit:(Int)->Unit
+){val state by viewModel.state.collectAsStateWithLifecycle()
     OcupacionListBody(
         state = state,
-        onEvent = viewModel::onEvent,
+        onEvent = { event ->
+            when (event) {
+                is ocupacionListaUiEvent.Edit -> onNavigateToEdit(event.id)
+                ocupacionListaUiEvent.CreateNew -> onAddOcupacion()
+                else -> viewModel.onEvent(event)
+            }
+        },
         onAddOcupacion = onAddOcupacion
     )
+//) {
+//    val state by viewModel.state.collectAsStateWithLifecycle()
+//    OcupacionListBody(
+//        state = state,
+//        onEvent = viewModel::onEvent,
+//        onAddOcupacion = onAddOcupacion,
+//
+//    )
 }
 
 @Composable
@@ -113,6 +128,9 @@ fun OcupacionListBody(
                                 ocupacion = ocupacion,
                                 onDelete = {
                                     onEvent(ocupacionListaUiEvent.Delete(ocupacion.ocupacionId))
+                                },
+                                onClick = {
+                                    onEvent(ocupacionListaUiEvent.Edit(ocupacion.ocupacionId))
                                 }
                             )
                         }
@@ -126,10 +144,12 @@ fun OcupacionListBody(
 @Composable
 fun OcupacionItem(
     ocupacion: Ocupacion,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onClick: ()-> Unit
 ) {
     ElevatedCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        onClick=onClick
     ) {
         Row(
             modifier = Modifier
@@ -149,6 +169,9 @@ fun OcupacionItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
+            }
+             IconButton( onClick = onClick){
+                Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar Ocupacion")
             }
             IconButton(
                 onClick = onDelete,
@@ -174,6 +197,10 @@ private fun OcupacionListBodyPreview() {
                 Ocupacion(ocupacionId = 2, descripcion = "Ingeniero", sueldo = 75000.0)
             )
         )
-        OcupacionListBody(state, {}, {})
+        OcupacionListBody(state,
+            {},
+            {},
+
+        )
     }
 }

@@ -1,8 +1,5 @@
 package com.example.ocupacion_registro.domain.validacion
 
-
-
-
     data class ValidationResult(
         val isValid: Boolean,
         val error: String? = null

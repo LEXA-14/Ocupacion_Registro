@@ -1,7 +1,7 @@
 package com.example.ocupacion_registro.domain.userCase
 
 
-import Ocupacion
+import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
 import com.example.ocupacion_registro.domain.validacion.validateDescripcion
 import com.example.ocupacion_registro.domain.validacion.validateSueldo

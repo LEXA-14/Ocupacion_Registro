@@ -1,3 +1,4 @@
+package com.example.ocupacion_registro.data.ocupacion.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao

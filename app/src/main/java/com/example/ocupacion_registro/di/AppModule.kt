@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ocupacionDatabase
+import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDatabase
 import javax.inject.Singleton
 
 

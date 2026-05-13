@@ -1,6 +1,6 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
-import Ocupacion
+import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 
 data class ocupacionListUiState (
     val isLoading: Boolean=false,

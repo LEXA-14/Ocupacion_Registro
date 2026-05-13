@@ -1,11 +1,12 @@
 package com.example.ocupacion_registro.data.ocupacion.local.repository
 
-import Ocupacion
+import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
+import com.example.ocupacion_registro.data.ocupacion.local.ocupacionEntity
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import ocupacionEntity
+
 import javax.inject.Inject
 
 class ocupacionRepositoryImp @Inject constructor(

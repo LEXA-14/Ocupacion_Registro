@@ -1,9 +1,10 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.form
 
-import Ocupacion
+import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.ocupacion_registro.domain.userCase.DeleteOcupacionUseCase
 import com.example.ocupacion_registro.domain.userCase.GetOcupacionUseCase
 import com.example.ocupacion_registro.domain.userCase.UpsertOcupacionUseCase
@@ -14,6 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.ocupacion_registro.domain.validacion.validateDescripcion
 import com.example.ocupacion_registro.domain.validacion.validateSueldo
+import com.example.ocupacion_registro.navegacion.screen
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asStateFlow
 
 
@@ -25,7 +28,7 @@ class ocupacionFormViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val ocupacionId: Int = savedStateHandle["ocupacionId"] ?: 0
+    private val ocupacionId: Int = savedStateHandle.toRoute<screen.ocupacionForm>().ocupacionId
 
     private val _state = MutableStateFlow(OcupacionFormUiState())
     val state: StateFlow<OcupacionFormUiState> = _state.asStateFlow()

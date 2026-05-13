@@ -1,12 +1,11 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
-import androidx.lifecycle.SavedStateHandle
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ocupacion_registro.domain.userCase.DeleteOcupacionUseCase
-import com.example.ocupacion_registro.domain.userCase.GetOcupacionUseCase
 import com.example.ocupacion_registro.domain.userCase.ObserveOcupacionUseCase
-import com.example.ocupacion_registro.domain.userCase.UpsertOcupacionUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +35,7 @@ class ocupacionListaViewModel @Inject constructor(
             is ocupacionListaUiEvent.ShowMessage -> _state.update { it.copy(message = event.mensaje) }
             ocupacionListaUiEvent.ClearMessage -> _state.update { it.copy(message = null) }
             ocupacionListaUiEvent.CreateNew -> _state.update { it.copy(navigateToCreate = true) }
-            is ocupacionListaUiEvent.Delete -> _state.update { it.copy(navigateToEditId = event.id) }
+            is ocupacionListaUiEvent.Edit -> _state.update { it.copy(navigateToEditId = event.id) }
         }
         }
     fun loadOcupacion(){

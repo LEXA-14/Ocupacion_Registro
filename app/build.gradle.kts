@@ -1,9 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -32,10 +34,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+ }
+  kotlinOptions {
+       jvmTarget = "11"
+ }
     buildFeatures {
         compose = true
     }
@@ -57,15 +59,19 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.room.common.jvm)
-    implementation(libs.androidx.room.runtime.jvm)
-    implementation(libs.androidx.room.compiler)
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation(libs.androidx.material.icons.extended)
+    //implementation(libs.androidx.room.common.jvm)
+//    implementation(libs.androidx.room.runtime.jvm)
+//    implementation(libs.androidx.room.compiler)
     implementation(libs.androidx.espresso.core)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.material3)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,4 +79,10 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.lifecycle.compose)
+
 }

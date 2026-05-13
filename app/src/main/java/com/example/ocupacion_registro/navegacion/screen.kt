@@ -1,5 +1,6 @@
 package com.example.ocupacion_registro.navegacion
 
+
 import kotlinx.serialization.Serializable
 
 sealed class screen {
@@ -7,5 +8,5 @@ sealed class screen {
      data object ocupacionList: screen()
 
     @Serializable
-    data object ocupacionForm: screen()
+    data class ocupacionForm(val ocupacionId: Int=0): screen()
 }
