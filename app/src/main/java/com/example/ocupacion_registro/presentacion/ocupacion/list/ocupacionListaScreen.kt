@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,6 +26,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+
 
 
 @Composable
@@ -55,16 +58,10 @@ fun OcupacionListScreen(
         },
         onAddOcupacion = onAddOcupacion
     )
-//) {
-//    val state by viewModel.state.collectAsStateWithLifecycle()
-//    OcupacionListBody(
-//        state = state,
-//        onEvent = viewModel::onEvent,
-//        onAddOcupacion = onAddOcupacion,
-//
-//    )
+
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OcupacionListBody(
     state: ocupacionListUiState,
@@ -81,6 +78,11 @@ fun OcupacionListBody(
     }
 
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {Text("Ocupaciones")}
+            )
+        },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
