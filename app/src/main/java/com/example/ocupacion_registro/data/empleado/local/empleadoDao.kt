@@ -21,10 +21,10 @@ interface empleadoDao {
     suspend fun deleteIdEmpl(id:Int)
 
     @Query("select * from empleado where empleadoId = :id")
-    suspend fun getByIdEmpl(id: Int)
+    suspend fun getByIdEmpl(id: Int):empleadoEntity?
 
     @Query("select * from empleado")
-    suspend fun observeAllEmpl(): Flow<List<empleadoEntity>>
+     fun observeAllEmpl(): Flow<List<empleadoEntity>>
 
     @Query("select * from empleado where Nombres =:nombre")
     suspend fun getByNameEmpl(nombre: String)

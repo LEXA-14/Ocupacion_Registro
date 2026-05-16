@@ -1,9 +1,14 @@
 package com.example.ocupacion_registro.data.empleado.local.repository
 
-import androidx.constraintlayout.helper.widget.Flow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import com.example.ocupacion_registro.data.empleado.local.empleadoDao
+import com.example.ocupacion_registro.data.empleado.local.mappers.empleadoMappers.toDomain
+import com.example.ocupacion_registro.data.empleado.local.mappers.empleadoMappers.toEntity
+import com.example.ocupacion_registro.domain.empleado.model.Empleado
 import com.example.ocupacion_registro.domain.empleado.repository.empleadoRepository
 import javax.inject.Inject
+
 
 class empleadoRepositoryImp  @Inject constructor(
     private val localDataSource: empleadoDao
