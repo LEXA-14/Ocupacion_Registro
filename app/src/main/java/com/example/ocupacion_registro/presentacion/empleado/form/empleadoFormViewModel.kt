@@ -44,6 +44,12 @@ class empleadoFormViewModel @Inject constructor(
             is empleadoFormUiEvent.SueldoChanged -> _state.update {
                 it.copy(sueldo = event.value.toDoubleOrNull(), sueldoError = null)
             }
+            is empleadoFormUiEvent.FechaChanged -> _state.update {
+                it.copy(fechaIngreso = event.value)
+            }
+            is empleadoFormUiEvent.SexoChanged -> _state.update {
+                it.copy(sexo = event.value, sexoError = null)
+            }
             empleadoFormUiEvent.Save -> onSave()
             empleadoFormUiEvent.Delete -> onDelete()
         }
