@@ -22,21 +22,21 @@ class empleadoListaViewModel @Inject constructor(
     val state: StateFlow<empleadoListaUiState> = _stateEmpl.asStateFlow()
 
     init {
-        loadOcupacion()
+        loadEmpleado()
     }
 
     fun onEvent(event: empleadoListaUiEvent){
         when (event) {
-            empleadoListaUiEvent.loadEmpl-> loadOcupacion()
-            empleadoListaUiEvent.refreshEmpl-> loadOcupacion()
-            is empleadoListaUiEvent.deleteEmpl-> onDelete(event.id)
+            empleadoListaUiEvent.loadEmpl-> loadEmpleado()
+            empleadoListaUiEvent.refreshEmpl-> loadEmpleado()
+            is empleadoListaUiEvent.deleteEmpl-> onDeleteEmpl(event.id)
             is empleadoListaUiEvent.showMessageEmpl -> _stateEmpl.update { it.copy(messageEmpl = event.message) }
             empleadoListaUiEvent.clearMessageEmpl -> _stateEmpl.update { it.copy(messageEmpl = null) }
             empleadoListaUiEvent.createNewEmpl -> _stateEmpl.update { it.copy(navigateToCreateEmpl = true) }
             is empleadoListaUiEvent.editEmpl -> _stateEmpl.update { it.copy(navigateToEditIdEmpl = event.id) }
         }
     }
-    fun loadOcupacion(){
+    fun loadEmpleado(){
         viewModelScope.launch {
             _stateEmpl.update { it.copy(isLoading = true) }
             observeEmpleadoUseCase().collectLatest { list->
@@ -45,7 +45,7 @@ class empleadoListaViewModel @Inject constructor(
         }
     }
 
-    private fun onDelete(id:Int){
+    private fun onDeleteEmpl(id:Int){
         viewModelScope.launch {
             deleteEmpleadoUseCase(id)
             onEvent(empleadoListaUiEvent.showMessageEmpl("Eliminado"))
