@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ocupacion_registro.presentacion.empleado.lista.empleadoListaScreen
 import com.example.ocupacion_registro.presentacion.ocupacion.form.OcupacionFormScreen
 import com.example.ocupacion_registro.presentacion.ocupacion.list.OcupacionListScreen
 
@@ -25,13 +26,13 @@ fun ocupacionNavHost(
                 onAddOcupacion = {
                     navController.navigate(screen.ocupacionForm(ocupacionId = 0))
                 },
-                onNavigateToEdit = {
-                    id-> navController.navigate(screen.ocupacionForm(ocupacionId = id))
+                onNavigateToEdit = { id ->
+                    navController.navigate(screen.ocupacionForm(ocupacionId = id))
                 }
             )
         }
 
-        composable<screen.ocupacionForm> {backStackEntry->
+        composable<screen.ocupacionForm> { backStackEntry ->
 
             OcupacionFormScreen(
 
@@ -40,5 +41,28 @@ fun ocupacionNavHost(
                 }
             )
         }
-    }
-}
+
+
+        composable<screen.empleadoLista> {
+            empleadoListaScreen(
+                onAddEmpleado = {
+                    navController.navigate(screen.empleadoForm(empleadoId = 0))
+                },
+                onNavigateToEdit = { id ->
+                    navController.navigate(screen.empleadoForm(empleadoId = id))
+                },
+                onBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
+
+        composable<screen.empleadoForm> {
+            empleadoFormScreen(
+                onBack = {
+                    navController.navigateUp()
+                }
+            )
+        }
+    }}
+

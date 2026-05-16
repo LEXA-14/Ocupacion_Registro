@@ -8,7 +8,7 @@ import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
 @Database(
     entities = [ocupacionEntity::class],
     [empleadoEntity::class],
-    version=2
+    version=3
 )
 
 abstract class ocupacionDatabase:RoomDatabase(){

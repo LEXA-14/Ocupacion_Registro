@@ -11,8 +11,8 @@ sealed class screen {
     data class ocupacionForm(val ocupacionId: Int=0): screen()
 
     @Serializable
-    data object empleadoList:screen()
+    data object empleadoLista:screen()
 
     @Serializable
-    data class  empleadoForm(val empleadoId:Int=0): screen
+    data class  empleadoForm(val empleadoId:Int=0): screen()
 }

@@ -11,6 +11,9 @@ data class empleadoFormUiState(
  val isDeleting: Boolean=false,
  val isNew: Boolean=true,
  val saved: Boolean=false,
- val deleted: Boolean=false
+ val deleted: Boolean=false,
+ val nombresError: String?=null,
+ val sueldoError: String?=null,
+ val sexoError:String?=null
 
 )

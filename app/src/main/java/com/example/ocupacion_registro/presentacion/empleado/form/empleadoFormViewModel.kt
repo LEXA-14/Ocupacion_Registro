@@ -7,17 +7,8 @@ import androidx.navigation.toRoute
 import com.example.ocupacion_registro.domain.empleado.model.Empleado
 import com.example.ocupacion_registro.domain.empleado.useCase.deleteEmpleadoUseCase
 import com.example.ocupacion_registro.domain.empleado.useCase.getEmpleadoUseCase
-import com.example.ocupacion_registro.domain.empleado.useCase.observeEmpleadoUseCase
 import com.example.ocupacion_registro.domain.empleado.useCase.upsertEmpleadoUseCase
-import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
-import com.example.ocupacion_registro.domain.ocupacion.userCase.DeleteOcupacionUseCase
-import com.example.ocupacion_registro.domain.ocupacion.userCase.GetOcupacionUseCase
-import com.example.ocupacion_registro.domain.ocupacion.userCase.UpsertOcupacionUseCase
-import com.example.ocupacion_registro.domain.ocupacion.validacionOcupacion.validateDescripcion
-import com.example.ocupacion_registro.domain.ocupacion.validacionOcupacion.validateSueldo
 import com.example.ocupacion_registro.navegacion.screen
-import com.example.ocupacion_registro.presentacion.ocupacion.form.OcupacionFormUiEvent
-import com.example.ocupacion_registro.presentacion.ocupacion.form.OcupacionFormUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
