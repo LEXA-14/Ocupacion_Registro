@@ -1,4 +1,4 @@
-package com.example.ocupacion_registro.domain.validacion
+package com.example.ocupacion_registro.domain.ocupacion.validacionOcupacion
 
     data class ValidationResult(
         val isValid: Boolean,

@@ -1,4 +1,4 @@
-package com.example.ocupacion_registro.domain.userCase
+package com.example.ocupacion_registro.domain.ocupacion.userCase
 
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
 import javax.inject.Inject
