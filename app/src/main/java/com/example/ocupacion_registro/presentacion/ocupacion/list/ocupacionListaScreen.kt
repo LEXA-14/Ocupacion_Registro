@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,7 +46,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun OcupacionListScreen(
     viewModel:ocupacionListaViewModel = hiltViewModel(),
     onAddOcupacion: () -> Unit,
-    onNavigateToEdit:(Int)->Unit
+    onNavigateToEdit:(Int)->Unit,
+    onNavigateToEmpleados: () -> Unit
 ){val state by viewModel.state.collectAsStateWithLifecycle()
     OcupacionListBody(
         state = state,
@@ -66,7 +68,8 @@ fun OcupacionListScreen(
 fun OcupacionListBody(
     state: ocupacionListUiState,
     onEvent: (ocupacionListaUiEvent) -> Unit,
-    onAddOcupacion: () -> Unit
+    onAddOcupacion: () -> Unit,
+    onNavigateToEmpleados: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -80,7 +83,15 @@ fun OcupacionListBody(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {Text("Ocupaciones")}
+                title = {Text("Ocupaciones")},
+                actions = {
+                    IconButton(onClick = onNavigateToEmpleados) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Empleados"
+                        )
+                    }
+                }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.ocupacion_registro.presentacion.empleado.form.empleadoFormScreen
 import com.example.ocupacion_registro.presentacion.empleado.lista.empleadoListaScreen
 import com.example.ocupacion_registro.presentacion.ocupacion.form.OcupacionFormScreen
 import com.example.ocupacion_registro.presentacion.ocupacion.list.OcupacionListScreen
@@ -28,7 +29,10 @@ fun ocupacionNavHost(
                 },
                 onNavigateToEdit = { id ->
                     navController.navigate(screen.ocupacionForm(ocupacionId = id))
-                }
+                },
+                onNavigateToEmpleados = {
+                    navController.navigate(screen.empleadoLista)
+                    }
             )
         }
 
@@ -51,9 +55,7 @@ fun ocupacionNavHost(
                 onNavigateToEdit = { id ->
                     navController.navigate(screen.empleadoForm(empleadoId = id))
                 },
-                onBack = {
-                    navController.navigateUp()
-                }
+
             )
         }
 
