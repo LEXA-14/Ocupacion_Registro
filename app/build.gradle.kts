@@ -70,7 +70,6 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.material3)
-    implementation(libs.androidx.constraintlayout)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     testImplementation(libs.junit)

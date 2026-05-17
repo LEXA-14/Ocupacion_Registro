@@ -27,5 +27,5 @@ interface empleadoDao {
      fun observeAllEmpl(): Flow<List<empleadoEntity>>
 
     @Query("select * from empleado where Nombres =:nombre")
-    suspend fun getByNameEmpl(nombre: String)
+    suspend fun getByNameEmpl(nombre: String): empleadoEntity?
 }

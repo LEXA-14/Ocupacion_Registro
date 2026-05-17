@@ -58,7 +58,8 @@ fun OcupacionListScreen(
                 else -> viewModel.onEvent(event)
             }
         },
-        onAddOcupacion = onAddOcupacion
+        onAddOcupacion = onAddOcupacion,
+        onNavigateToEmpleados=onNavigateToEmpleados
     )
 
 }
@@ -213,6 +214,7 @@ private fun OcupacionListBodyPreview() {
         OcupacionListBody(state,
             {},
             {},
+            onNavigateToEmpleados = {}
 
         )
     }
