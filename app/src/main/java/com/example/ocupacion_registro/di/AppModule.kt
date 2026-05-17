@@ -2,6 +2,7 @@ package com.example.ocupacion_registro.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.ocupacion_registro.data.empleado.local.empleadoDao
 import dagger.Module
 import com.example.ocupacion_registro.data.ocupacion.local.ocupacionDao
 import dagger.Provides
@@ -25,13 +26,21 @@ object AppModule{
             context,
             ocupacionDatabase::class.java,
              "ocupacion_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     @Singleton
     fun provideOcupacionDao(database: ocupacionDatabase): ocupacionDao {
         return database.ocupacionDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmpleadoDao(database: ocupacionDatabase): empleadoDao {
+        return database.empleadoDao()
+
     }
 }
 
