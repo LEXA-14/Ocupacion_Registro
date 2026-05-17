@@ -55,6 +55,10 @@ fun ocupacionNavHost(
                 onNavigateToEdit = { id ->
                     navController.navigate(screen.empleadoForm(empleadoId = id))
                 },
+                onBack = {
+                    navController.navigateUp()
+                }
+
 
             )
         }

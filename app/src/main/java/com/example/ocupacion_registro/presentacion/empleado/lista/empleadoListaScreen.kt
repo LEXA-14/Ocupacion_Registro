@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -52,7 +53,8 @@ import com.example.ocupacion_registro.presentacion.ocupacion.list.ocupacionLista
 fun empleadoListaScreen(
     viewModel:empleadoListaViewModel = hiltViewModel(),
     onAddEmpleado: () -> Unit,
-    onNavigateToEdit:(Int)->Unit
+    onNavigateToEdit:(Int)->Unit,
+    onBack:()-> Unit
 ){val state by viewModel.state.collectAsStateWithLifecycle()
     empleadoListaBody(
         state = state,
@@ -63,7 +65,8 @@ fun empleadoListaScreen(
                 else -> viewModel.onEvent(event)
             }
         },
-        onAddEmpleado = onAddEmpleado
+        onAddEmpleado = onAddEmpleado,
+        onBack=onBack
     )
 
 }
@@ -73,7 +76,8 @@ fun empleadoListaScreen(
 fun empleadoListaBody(
     state: empleadoListaUiState,
     onEvent: (empleadoListaUiEvent) -> Unit,
-    onAddEmpleado: () -> Unit
+    onAddEmpleado: () -> Unit,
+    onBack: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -87,7 +91,15 @@ fun empleadoListaBody(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {Text("Empleados")}
+                title = {Text("Empleados")},
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Atras"
+                        )
+                    }
+                }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -222,6 +234,7 @@ private fun empleadoListaBodyPreview() {
             state,
             {},
             {},
+            onBack = {}
 
             )
     }
