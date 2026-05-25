@@ -1,10 +1,10 @@
-package com.example.ocupacion_registro.domain.userCase
+package com.example.ocupacion_registro.domain.ocupacion.userCase
 
 
 import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import com.example.ocupacion_registro.domain.ocupacion.repository.OcupacionRepository
-import com.example.ocupacion_registro.domain.validacion.validateDescripcion
-import com.example.ocupacion_registro.domain.validacion.validateSueldo
+import com.example.ocupacion_registro.domain.ocupacion.validacionOcupacion.validateDescripcion
+import com.example.ocupacion_registro.domain.ocupacion.validacionOcupacion.validateSueldo
 import javax.inject.Inject
 
 class UpsertOcupacionUseCase @Inject constructor(

@@ -1,10 +1,11 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ocupacion_registro.domain.userCase.DeleteOcupacionUseCase
-import com.example.ocupacion_registro.domain.userCase.ObserveOcupacionUseCase
+import com.example.ocupacion_registro.domain.ocupacion.userCase.DeleteOcupacionUseCase
+import com.example.ocupacion_registro.domain.ocupacion.userCase.ObserveOcupacionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

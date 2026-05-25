@@ -10,7 +10,7 @@ data class empleadoEntity (
     @PrimaryKey(autoGenerate = true)
     val empleadoId:Int=0,
     val nombres: String,
-    val fechaIngreso: Date,
+    val fechaIngreso: String,
     val sexo: Char,
     val sueldo: Double
 )
