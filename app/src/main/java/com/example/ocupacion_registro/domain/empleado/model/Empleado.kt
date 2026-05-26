@@ -10,5 +10,6 @@ data class Empleado
         val nombres: String,
         val fechaIngreso: String,
         val sexo: Char,
-        val sueldo: Double
+        val sueldo: Double,
+            val sueldoFinal: Double
             )
