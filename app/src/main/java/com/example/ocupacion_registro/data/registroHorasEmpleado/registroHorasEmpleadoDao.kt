@@ -22,4 +22,7 @@ interface registroHorasEmpleadoDao {
     @Query("SELECT * FROM registro_horas_empleado")
     fun observeAll(): Flow<List<registroHorasEmpleadoEntity?>>
 
+    @Query("SELECT * FROM registro_horas_empleado WHERE empleadoId = :empleadoId")
+    fun observeByEmpleado(empleadoId: Int): Flow<List<registroHorasEmpleadoEntity>>
+
 }
