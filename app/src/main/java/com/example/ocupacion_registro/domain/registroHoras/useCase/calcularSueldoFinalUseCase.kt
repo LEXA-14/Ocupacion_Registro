@@ -26,6 +26,7 @@ class CalcularSueldoFinalUseCase @Inject constructor(
         validateEmpleadoExiste(empleado).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
         validateHorasExtras(horas.horasExtras).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
         validateHorasNocturnas(horas.horasNocturnas).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
+        validateHorasNocturnas(horas.horasNocturnas, horas.horasExtras).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
         validateFecha(horas.fecha).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
 
 

@@ -23,6 +23,13 @@ fun validateHorasNocturnas(horasNocturnas: Double): ValidationResultRegistroHora
         else -> ValidationResultRegistroHoras(true, null)
     }
 }
+fun validateHorasNocturnas(horasNocturnas: Double, horasExtras: Double): ValidationResultRegistroHoras {
+    return when {
+        horasNocturnas < 0 -> ValidationResultRegistroHoras(false, "Las horas nocturnas no pueden ser negativas")
+        horasNocturnas > horasExtras -> ValidationResultRegistroHoras(false, "Las horas nocturnas no pueden ser mayores que las horas extras")
+        else -> ValidationResultRegistroHoras(true, null)
+    }
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun validateFecha(fecha: LocalDate): ValidationResultRegistroHoras {
