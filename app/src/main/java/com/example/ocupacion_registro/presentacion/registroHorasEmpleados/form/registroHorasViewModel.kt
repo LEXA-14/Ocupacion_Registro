@@ -1,5 +1,6 @@
 package com.example.ocupacion_registro.presentacion.registroHorasEmpleados.form
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ocupacion_registro.domain.empleado.repository.empleadoRepository
@@ -7,7 +8,7 @@ import com.example.ocupacion_registro.domain.registroHoras.model.registroHorasEm
 import com.example.ocupacion_registro.domain.registroHoras.useCase.CalcularSueldoFinalUseCase
 import com.example.ocupacion_registro.domain.registroHoras.validaciones.validateHorasExtras
 import com.example.ocupacion_registro.domain.registroHoras.validaciones.validateHorasNocturnas
-import com.google.android.libraries.places.api.model.LocalDate
+import java.time.LocalDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,11 +20,17 @@ import javax.inject.Inject
 @HiltViewModel
 class registroHorasViewModel @Inject constructor(
     private val calcularSueldoFinalUseCase: CalcularSueldoFinalUseCase,
-    private val empleadoRepository: empleadoRepository
+    private val empleadoRepository: empleadoRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(registroHoraUIState())
     val state = _state.asStateFlow()
+
+    init {
+        val empleadoId=savedStateHandle.get<Int>("empleadoId") ?:0
+        loadEmpleado(empleadoId)
+    }
 
     fun onEvent(event: registroHorasUIEvent) {
         when (event) {
@@ -94,6 +101,7 @@ class registroHorasViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             val state = _state.value
             val horas = registroHorasEmpleado(
+                registroId = 0,
                 empleadoId     = state.empleadoId,
                 horasExtras    = state.horasExtras.toDoubleOrNull() ?: 0.0,
                 horasNocturnas = state.horasNocturnas.toDoubleOrNull() ?: 0.0,
