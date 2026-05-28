@@ -2,12 +2,14 @@ package com.example.ocupacion_registro.presentacion.registroHorasEmpleados.lista
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ocupacion_registro.domain.empleado.repository.empleadoRepository
 import com.example.ocupacion_registro.domain.registroHoras.repository.registroHorasRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class registroHorasListaViewModel @Inject constructor(
-    private val registroHorasRepository: registroHorasRepository
+    private val registroHorasRepository: registroHorasRepository,
+    private val empleadoRepository: empleadoRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(registroHorasListaUIState(isLoading = true))
@@ -35,7 +38,8 @@ class registroHorasListaViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             registroHorasRepository.observeAllHoras().collectLatest { list ->
-                _state.update { it.copy(isLoading = false, registros = list) }
+                val empleados=empleadoRepository.observeAllEmpl().first()
+                _state.update { it.copy(isLoading = false, registros = list, empleados=empleados) }
             }
         }
     }

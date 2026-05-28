@@ -89,8 +89,13 @@ fun registroHorasListaScreen(
                         items = state.registros,
                         key = { it.registroId }
                     ) { registro ->
+                        val empleadoNombre = state.empleados
+                            .firstOrNull { it.empleadoId == registro.empleadoId }
+                            ?.nombres ?: "Empleado #${registro.empleadoId}"
+
                         registroHorasItem(
                             registro = registro,
+                            empleadoNombre=empleadoNombre,
                             onDelete = { viewModel.onEvent(registroHorasListaUIEvent.Delete(registro.registroId)) }
                         )
                     }
@@ -103,6 +108,7 @@ fun registroHorasListaScreen(
 @Composable
 fun registroHorasItem(
     registro: registroHorasEmpleado,
+    empleadoNombre:String,
     onDelete: () -> Unit
 ) {
     ElevatedCard(modifier = Modifier.fillMaxWidth()) {
@@ -114,8 +120,12 @@ fun registroHorasItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Empleado #${registro.empleadoId}",
+                    text = empleadoNombre,
                     style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Empleado #${registro.empleadoId}",
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
                     text = "Horas extras: ${registro.horasExtras}",
