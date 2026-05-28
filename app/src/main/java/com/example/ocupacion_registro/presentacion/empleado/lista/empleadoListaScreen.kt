@@ -60,7 +60,7 @@ fun empleadoListaScreen(
         state = state,
         onEvent = { event ->
             when (event) {
-                is ocupacionListaUiEvent.Edit -> onNavigateToEdit(event.id)
+                is empleadoListaUiEvent.editEmpl -> onNavigateToEdit(event.id)
                 is empleadoListaUiEvent.registroHoras -> onNavigateToRegistroHoras(event.id)
                 ocupacionListaUiEvent.CreateNew -> onAddEmpleado()
                 else -> viewModel.onEvent(event)
