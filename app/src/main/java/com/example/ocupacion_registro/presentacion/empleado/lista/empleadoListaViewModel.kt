@@ -36,6 +36,7 @@ class empleadoListaViewModel @Inject constructor(
             empleadoListaUiEvent.clearMessageEmpl -> _stateEmpl.update { it.copy(messageEmpl = null) }
             empleadoListaUiEvent.createNewEmpl -> _stateEmpl.update { it.copy(navigateToCreateEmpl = true) }
             is empleadoListaUiEvent.editEmpl -> _stateEmpl.update { it.copy(navigateToEditIdEmpl = event.id) }
+            is empleadoListaUiEvent.registroHoras -> {}
         }
     }
     fun loadEmpleado(){

@@ -9,6 +9,7 @@ sealed class empleadoListaUiEvent{
     data class editEmpl(val id:Int): empleadoListaUiEvent()
     data class deleteEmpl(val id:Int): empleadoListaUiEvent()
     data class showMessageEmpl(val message: String?): empleadoListaUiEvent()
+    data class registroHoras(val id: Int) : empleadoListaUiEvent()
 
 
 }

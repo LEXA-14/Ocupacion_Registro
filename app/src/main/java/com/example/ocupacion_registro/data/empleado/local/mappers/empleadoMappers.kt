@@ -7,11 +7,12 @@ object empleadoMappers {
 
     fun empleadoEntity.toDomain(): Empleado= Empleado(
 
-        empleadoId= this.empleadoId,
+        empleadoId = this.empleadoId,
         nombres = nombres,
-        fechaIngreso=fechaIngreso,
-        sexo=sexo,
-        sueldo=sueldo
+        fechaIngreso =fechaIngreso,
+        sexo =sexo,
+        sueldo =sueldo,
+        sueldoFinal = sueldoFinal
         )
 
     fun Empleado.toEntity(): empleadoEntity=
@@ -20,7 +21,8 @@ object empleadoMappers {
             nombres=nombres,
             fechaIngreso=fechaIngreso,
             sexo=sexo,
-            sueldo=sueldo
+            sueldo=sueldo,
+            sueldoFinal=sueldoFinal
         )
     }
 

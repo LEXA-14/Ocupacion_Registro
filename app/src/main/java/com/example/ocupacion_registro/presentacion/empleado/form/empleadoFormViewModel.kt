@@ -89,7 +89,8 @@ class empleadoFormViewModel @Inject constructor(
                 nombres = state.value.nombres ?: "",
                 sueldo = state.value.sueldo ?: 0.0,
                 fechaIngreso = state.value.fechaIngreso ?: "",
-                sexo = state.value.sexo ?: ' '
+                sexo = state.value.sexo ?: ' ',
+                sueldoFinal = state.value.sueldo
             )
 
             val result = upsertEmpleadoUseCase(empleado)
