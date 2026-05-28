@@ -13,10 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -32,7 +36,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -48,7 +54,8 @@ fun OcupacionListScreen(
     viewModel:ocupacionListaViewModel = hiltViewModel(),
     onAddOcupacion: () -> Unit,
     onNavigateToEdit:(Int)->Unit,
-    onNavigateToEmpleados: () -> Unit
+    onNavigateToEmpleados: () -> Unit,
+    onNavigateToRegistroHoras:()-> Unit
 ){val state by viewModel.state.collectAsStateWithLifecycle()
     OcupacionListBody(
         state = state,
@@ -60,43 +67,56 @@ fun OcupacionListScreen(
             }
         },
         onAddOcupacion = onAddOcupacion,
-        onNavigateToEmpleados=onNavigateToEmpleados
+        onNavigateToEmpleados=onNavigateToEmpleados,
+        onNavigateToRegistroHoras = onNavigateToRegistroHoras
     )
 
 }
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OcupacionListBody(
     state: ocupacionListUiState,
     onEvent: (ocupacionListaUiEvent) -> Unit,
     onAddOcupacion: () -> Unit,
-    onNavigateToEmpleados: () -> Unit
+    onNavigateToEmpleados: () -> Unit,
+    onNavigateToRegistroHoras: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(state.message) {
-        state.message?.let { message ->
-            snackbarHostState.showSnackbar(message)
-            onEvent(ocupacionListaUiEvent.ClearMessage)
-        }
-    }
+    var menuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {Text("Ocupaciones")},
+                title = { Text("Ocupaciones") },
                 actions = {
-                    TextButton(onClick = onNavigateToEmpleados) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Empleados"
+                    IconButton(onClick = { menuExpanded = true }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Empleados") },
+                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                            onClick = {
+                                menuExpanded = false
+                                onNavigateToEmpleados()
+                            }
                         )
-                        Text("Empleados")
+                        DropdownMenuItem(
+                            text = { Text("Registro de Horas") },
+                            leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+                            onClick = {
+                                menuExpanded = false
+                                onNavigateToRegistroHoras()
+                            }
+                        )
                     }
                 }
             )
         },
+
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
@@ -216,7 +236,8 @@ private fun OcupacionListBodyPreview() {
         OcupacionListBody(state,
             {},
             {},
-            onNavigateToEmpleados = {}
+            onNavigateToEmpleados = {},
+            onNavigateToRegistroHoras = {}
 
         )
     }

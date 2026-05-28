@@ -10,6 +10,7 @@ import com.example.ocupacion_registro.presentacion.empleado.lista.empleadoListaS
 import com.example.ocupacion_registro.presentacion.ocupacion.form.OcupacionFormScreen
 import com.example.ocupacion_registro.presentacion.ocupacion.list.OcupacionListScreen
 import com.example.ocupacion_registro.presentacion.registroHorasEmpleados.form.registroHorasScreen
+import com.example.ocupacion_registro.presentacion.registroHorasEmpleados.lista.registroHorasListaScreen
 
 
 @Composable
@@ -34,6 +35,9 @@ fun ocupacionNavHost(
                 onNavigateToEmpleados = {
                     navController.navigate(screen.empleadoLista)
                     },
+                onNavigateToRegistroHoras = {
+                    navController.navigate(screen.registroHorasLista)
+                }
 
             )
         }
@@ -80,6 +84,11 @@ fun ocupacionNavHost(
                 onBack = {
                     navController.navigateUp()
                 }
+            )
+        }
+        composable<screen.registroHorasLista> {
+            registroHorasListaScreen(
+                onBack = { navController.navigateUp() }
             )
         }
     }}
