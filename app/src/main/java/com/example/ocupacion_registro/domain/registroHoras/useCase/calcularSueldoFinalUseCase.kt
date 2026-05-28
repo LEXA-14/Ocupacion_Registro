@@ -30,13 +30,15 @@ class CalcularSueldoFinalUseCase @Inject constructor(
         validateFecha(horas.fecha).let { if (!it.isValid) return Result.failure(Exception(it.error)) }
 
 
-        val valorHora    = (empleado!!.sueldo /23.3)/8
-        val horasMax35=min(horas.horasExtras,28.0)
+        val valorHora    = ((empleado!!.sueldo /23.83)/8)
+        println("HORA PAGADO " + valorHora)
+
+        val horasMax35=min(horas.horasExtras,24.0)
         var pagoExtra = horasMax35 * (valorHora* 1.35)
 
 
-        if(horas.horasExtras > 28){
-            var horas100=horas.horasExtras-28
+        if(horas.horasExtras > 24){
+            var horas100=horas.horasExtras-24
             pagoExtra +=horas100 * (valorHora * 2)
         }
         if(horas.horasNocturnas>0){
@@ -50,6 +52,6 @@ class CalcularSueldoFinalUseCase @Inject constructor(
             empleado.copy(sueldoFinal = sueldoFinal)
         )
 
-        return Result.success(sueldoFinal)
+        return Result.success(pagoExtra)
     }
 }
