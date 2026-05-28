@@ -45,7 +45,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.ocupacion_registro.domain.empleado.model.Empleado
 
 
-
 import com.example.ocupacion_registro.presentacion.ocupacion.list.ocupacionListaUiEvent
 
 
@@ -54,6 +53,7 @@ fun empleadoListaScreen(
     viewModel:empleadoListaViewModel = hiltViewModel(),
     onAddEmpleado: () -> Unit,
     onNavigateToEdit:(Int)->Unit,
+    onNavigateToRegistroHoras: (Int)->Unit,
     onBack:()-> Unit
 ){val state by viewModel.state.collectAsStateWithLifecycle()
     empleadoListaBody(
@@ -61,6 +61,7 @@ fun empleadoListaScreen(
         onEvent = { event ->
             when (event) {
                 is ocupacionListaUiEvent.Edit -> onNavigateToEdit(event.id)
+                is empleadoListaUiEvent.registroHoras -> onNavigateToRegistroHoras(event.id)
                 ocupacionListaUiEvent.CreateNew -> onAddEmpleado()
                 else -> viewModel.onEvent(event)
             }
@@ -152,6 +153,9 @@ fun empleadoListaBody(
                                 },
                                 onClick = {
                                     onEvent(empleadoListaUiEvent.editEmpl(empleado.empleadoId))
+                                },
+                                onRegistroHoras = {
+                                    onEvent(empleadoListaUiEvent.registroHoras(empleado.empleadoId))
                                 }
                             )
                         }
@@ -166,7 +170,8 @@ fun empleadoListaBody(
 fun empleadoItem(
     empleado: Empleado,
     onDelete: () -> Unit,
-    onClick: ()-> Unit
+    onClick: ()-> Unit,
+    onRegistroHoras: () -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
@@ -197,7 +202,7 @@ fun empleadoItem(
                 )
 
                 Text(
-                    text = "${empleado.sueldo} DOP",
+                    text = "${"%.2f".format(empleado.sueldoFinal)} DOP",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -205,6 +210,9 @@ fun empleadoItem(
             }
             IconButton( onClick = onClick){
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar Empleado")
+            }
+            IconButton(onClick = onRegistroHoras) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Registro de horas extras y nocturnas")
             }
             IconButton(
                 onClick = onDelete,
@@ -226,8 +234,8 @@ private fun empleadoListaBodyPreview() {
         val state = empleadoListaUiState(
             isLoading = false,
             empleados = listOf(
-                Empleado(empleadoId = 1, nombres = "Leudy Jaquez", fechaIngreso = "05-02-2006", sexo = 'F', sueldo = 90000.0),
-                Empleado(empleadoId = 2, nombres = "Maria Juana", fechaIngreso = "03-03-2025", sexo = 'F', sueldo = 75000.0)
+                Empleado(empleadoId = 1, nombres = "Leudy Jaquez", fechaIngreso = "05-02-2006", sexo = 'F', sueldo = 90000.0, sueldoFinal = 95000.0),
+                Empleado(empleadoId = 2, nombres = "Maria Juana", fechaIngreso = "03-03-2025", sexo = 'F', sueldo = 75000.0, sueldoFinal = 80000.0)
             )
         )
         empleadoListaBody(
