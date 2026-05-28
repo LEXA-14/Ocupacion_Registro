@@ -15,4 +15,8 @@ sealed class screen {
 
     @Serializable
     data class  empleadoForm(val empleadoId:Int=0): screen()
+
+    @Serializable
+    data class registroHoras(val empleadoId: Int=0): screen()
+    companion object
 }

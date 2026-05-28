@@ -32,6 +32,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
  }
@@ -50,6 +51,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -70,7 +72,8 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.material3)
-    implementation(libs.places)
+
+    implementation(libs.runtime)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     testImplementation(libs.junit)
