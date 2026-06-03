@@ -51,6 +51,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.material3.window.size.class1)
+    implementation(libs.ui)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 
     implementation(libs.androidx.core.ktx)
@@ -88,5 +90,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.compose)
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.0")
+    implementation("androidx.compose.material3.adaptive:adaptive:1.0.0")
+    implementation("androidx.compose.material3.adaptive:adaptive-navigation:1.0.0")
 
 }

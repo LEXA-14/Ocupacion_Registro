@@ -1,5 +1,11 @@
 package com.example.ocupacion_registro.presentacion.empleado.lista
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,8 +39,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.platform.testTag
@@ -46,6 +53,10 @@ import com.example.ocupacion_registro.domain.empleado.model.Empleado
 
 
 import com.example.ocupacion_registro.presentacion.ocupacion.list.ocupacionListaUiEvent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.ui.Alignment
 
 
 @Composable
@@ -137,27 +148,35 @@ fun empleadoListaBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    AnimatedVisibility(
+                        visible = state.empleados.isNotEmpty(),
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically()
+
                     ) {
-                        items(
-                            items = state.empleados,
-                            key = { it.empleadoId }
-                        ) { empleado ->
-                            empleadoItem(
-                                empleado = empleado,
-                                onDelete = {
-                                    onEvent(empleadoListaUiEvent.deleteEmpl(empleado.empleadoId))
-                                },
-                                onClick = {
-                                    onEvent(empleadoListaUiEvent.editEmpl(empleado.empleadoId))
-                                },
-                                onRegistroHoras = {
-                                    onEvent(empleadoListaUiEvent.registroHoras(empleado.empleadoId))
-                                }
-                            )
+
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.empleados,
+                                key = { it.empleadoId }
+                            ) { empleado ->
+                                empleadoItem(
+                                    empleado = empleado,
+                                    onDelete = {
+                                        onEvent(empleadoListaUiEvent.deleteEmpl(empleado.empleadoId))
+                                    },
+                                    onClick = {
+                                        onEvent(empleadoListaUiEvent.editEmpl(empleado.empleadoId))
+                                    },
+                                    onRegistroHoras = {
+                                        onEvent(empleadoListaUiEvent.registroHoras(empleado.empleadoId))
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -173,9 +192,11 @@ fun empleadoItem(
     onClick: ()-> Unit,
     onRegistroHoras: () -> Unit
 ) {
+    var isExpanded by remember { mutableStateOf(false) }
     ElevatedCard(
-        modifier = Modifier.fillMaxWidth(),
-        onClick=onClick
+        modifier = Modifier.fillMaxWidth()
+            .padding(vertical = 4.dp),
+        onClick = { isExpanded = !isExpanded }
     ) {
         Row(
             modifier = Modifier
@@ -184,44 +205,74 @@ fun empleadoItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = empleado.nombres,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = "${empleado.fechaIngreso} ",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Text(
-                    text = "${empleado.sexo}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                modifier = Modifier.fillMaxWidth()
+                    .padding(16.dp).animateContentSize(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioNoBouncy,
+                            stiffness = Spring.StiffnessLow
 
-                Text(
-                    text = "${"%.2f".format(empleado.sueldoFinal)} DOP",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-            }
-            IconButton( onClick = onClick){
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar Empleado")
-            }
-            IconButton(onClick = onRegistroHoras) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Registro de horas extras y nocturnas")
-            }
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.testTag("btn_delete_${empleado.empleadoId}")
+                        )
+                    )
             ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar Empleado"
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
+
+                        Text(
+                            text = empleado.nombres,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            text = "${"%.2f".format(empleado.sueldoFinal)} DOP",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+
+                    }
+                    IconButton(onClick = onClick) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = "Editar Empleado"
+                        )
+                    }
+                    IconButton(onClick = onRegistroHoras) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Registro de horas extras y nocturnas"
+                        )
+                    }
+                    IconButton(
+                        onClick = onDelete,
+                        modifier = Modifier.testTag("btn_delete_${empleado.empleadoId}")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Eliminar Empleado"
+                        )
+                    }
+                }
+                if (isExpanded) {
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "${empleado.fechaIngreso} ",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = "${empleado.sexo}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,7 +29,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -111,7 +114,11 @@ fun registroHorasItem(
     empleadoNombre:String,
     onDelete: () -> Unit
 ) {
-    ElevatedCard(modifier = Modifier.fillMaxWidth()) {
+    var isExpanded by remember { mutableStateOf(false) }
+    ElevatedCard(modifier = Modifier.fillMaxWidth()
+        .padding(vertical = 4.dp),
+        onClick = {isExpanded=!isExpanded}
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,10 +130,7 @@ fun registroHorasItem(
                     text = empleadoNombre,
                     style = MaterialTheme.typography.bodyLarge
                 )
-                Text(
-                    text = "Empleado #${registro.empleadoId}",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+
                 Text(
                     text = "Horas extras: ${registro.horasExtras}",
                     style = MaterialTheme.typography.bodyMedium,
@@ -137,14 +141,32 @@ fun registroHorasItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Text(
-                    text = "Fecha: ${registro.fecha}",
-                    style = MaterialTheme.typography.bodySmall
-                )
+
             }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Eliminar")
             }
         }
-    }
-}
+
+            if (isExpanded) {
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Empleado #${registro.empleadoId}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "Fecha: ${registro.fecha}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                    }
+                }
+
+                }
+            }
+        }
+

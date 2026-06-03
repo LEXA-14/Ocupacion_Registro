@@ -1,5 +1,13 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.material.icons.Icons
 import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +39,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -142,6 +148,7 @@ fun OcupacionListBody(
                         .testTag("loading")
                 )
             } else {
+
                 if (state.ocupaciones.isEmpty()) {
                     Text(
                         text = "No hay Ocupaciones",
@@ -151,24 +158,30 @@ fun OcupacionListBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    AnimatedVisibility(
+                        visible = state.ocupaciones.isNotEmpty(),
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
-                        items(
-                            items = state.ocupaciones,
-                            key = { it.ocupacionId }
-                        ) { ocupacion ->
-                            OcupacionItem(
-                                ocupacion = ocupacion,
-                                onDelete = {
-                                    onEvent(ocupacionListaUiEvent.Delete(ocupacion.ocupacionId))
-                                },
-                                onClick = {
-                                    onEvent(ocupacionListaUiEvent.Edit(ocupacion.ocupacionId))
-                                }
-                            )
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.ocupaciones,
+                                key = { it.ocupacionId }
+                            ) { ocupacion ->
+                                OcupacionItem(
+                                    ocupacion = ocupacion,
+                                    onDelete = {
+                                        onEvent(ocupacionListaUiEvent.Delete(ocupacion.ocupacionId))
+                                    },
+                                    onEditar = {
+                                        onEvent(ocupacionListaUiEvent.Edit(ocupacion.ocupacionId))
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -181,15 +194,22 @@ fun OcupacionListBody(
 fun OcupacionItem(
     ocupacion: Ocupacion,
     onDelete: () -> Unit,
-    onClick: ()-> Unit
+    onEditar: ()-> Unit
 ) {
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
-        onClick=onClick
+
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioNoBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
+
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -206,7 +226,7 @@ fun OcupacionItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-             IconButton( onClick = onClick){
+             IconButton( onClick = onEditar){
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Editar Ocupacion")
             }
             IconButton(

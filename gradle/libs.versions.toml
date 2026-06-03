@@ -20,6 +20,8 @@ serialization = "1.6.3"
 constraintlayout = "2.2.1"
 
 runtimeVersion = "1.11.2"
+material3WindowSizeClass = "1.4.0"
+ui = "1.11.2"
 
 
 
@@ -54,6 +56,8 @@ androidx-lifecycle-compose = { group = "androidx.lifecycle", name = "lifecycle-r
 material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtimeVersion" }
+androidx-material3-window-size-class1 = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
+ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
