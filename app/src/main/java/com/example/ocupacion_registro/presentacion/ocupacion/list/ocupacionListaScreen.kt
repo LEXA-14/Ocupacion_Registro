@@ -1,5 +1,10 @@
 package com.example.ocupacion_registro.presentacion.ocupacion.list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.material.icons.Icons
 import com.example.ocupacion_registro.domain.ocupacion.model.Ocupacion
 import androidx.compose.foundation.layout.Arrangement
@@ -142,6 +147,7 @@ fun OcupacionListBody(
                         .testTag("loading")
                 )
             } else {
+
                 if (state.ocupaciones.isEmpty()) {
                     Text(
                         text = "No hay Ocupaciones",
@@ -151,24 +157,30 @@ fun OcupacionListBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    AnimatedVisibility(
+                        visible = state.ocupaciones.isNotEmpty(),
+                        enter = fadeIn() + expandVertically(),
+                        exit = fadeOut() + shrinkVertically()
                     ) {
-                        items(
-                            items = state.ocupaciones,
-                            key = { it.ocupacionId }
-                        ) { ocupacion ->
-                            OcupacionItem(
-                                ocupacion = ocupacion,
-                                onDelete = {
-                                    onEvent(ocupacionListaUiEvent.Delete(ocupacion.ocupacionId))
-                                },
-                                onClick = {
-                                    onEvent(ocupacionListaUiEvent.Edit(ocupacion.ocupacionId))
-                                }
-                            )
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.ocupaciones,
+                                key = { it.ocupacionId }
+                            ) { ocupacion ->
+                                OcupacionItem(
+                                    ocupacion = ocupacion,
+                                    onDelete = {
+                                        onEvent(ocupacionListaUiEvent.Delete(ocupacion.ocupacionId))
+                                    },
+                                    onClick = {
+                                        onEvent(ocupacionListaUiEvent.Edit(ocupacion.ocupacionId))
+                                    }
+                                )
+                            }
                         }
                     }
                 }
